@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale">
+    <title>Product App</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <div class="nav-bar"></div>
+
+    <div id="app">
+
+        <div class="product">
+
+            <div class="product-image">
+                <img v-bind:src="image" v-bind:alt="altText">
+
+            </div>
+
+            <div class="product-info">
+                <h1>{{title}}</h1>
+                <p v-if="inventory >= 10">In Stock</p>
+                <p v-else-if="inventory > 0 && inventory < 10">Almost sold out</p>
+                <p v-else :class="{pStyle: inventory === 0}">Out Stock</p>
+                <p>{{description}}</p>
+                <p>More products like this, click <a v-bind:href="linkImage" target="blank">here</a>.</p>
+                <p v-if="sale"><strong>On SALE</strong></p>
+                <p v-else><strong>Out SALE</strong></p>
+
+                <h4>ID: {{id}}</h4>
+
+                <h4>Materials</h4>
+
+                <ul>
+                    <li v-for="detail in details">{{detail}}</li>
+                </ul>
+
+                <h4>Sizes</h4>
+
+                <ul>
+                    <li v-for="size in sizes">{{size}}</li>
+                </ul>
+
+                <h4>Quantity: </h4>
+
+                <div v-for="(variant , index) in variants" key="variant.variantID" class="color-box"
+                    :style="{backgroundColor: variant.variantColor}" @mouseover="updateProduct(index)">
+                </div>
+
+                <button v-on:click="addToCart" :disabled="inventory===0" :class="{disabledButton: inventory === 0}">Add
+                    to Cart</button>
+                <button v-on:click="deleteToCart">Delete to Cart</button>
+
+                <div class="cart">
+                    <p>Cart ({{cart}})</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
